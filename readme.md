@@ -2,6 +2,8 @@
 
 Web app for accruing JPEG artifacts.
 
+![JPEG Enricher cover.](screenshot.jpg)
+
 ## Usage
 
 Install the dependencies:
