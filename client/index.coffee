@@ -5,7 +5,7 @@ $(document).ready ->
     alert 'No HTML5 Upload. Get a new browser.'
     return
   page = new Page
-  page.setup 'file'
+  page.setup()
 
 class Page
   constructor: ->
@@ -15,6 +15,7 @@ class Page
     @enrichBtn = $ '#enrich'
     @originalImage = document.getElementById 'original-image'
     @imageContainer = document.getElementById 'original-image-container'
+    @fileInput = document.getElementById 'file'
     @quality = 20
     @repetitions = 100
     @shakiness = 1
@@ -22,12 +23,13 @@ class Page
     @buttonIsEnrich = true
     @continueReps = false
 
-  setup: (fileInputId) ->
+  setup: ->
     opts = {placement: 'top', trigger: 'focus'}
     $('#quality').popover(opts).val @quality
     $('#repetitions').popover(opts).val @repetitions
     $('#shakiness').popover(opts).val @shakiness
-    #styleFileInput fileInputId, (files) => @processFilesChange files
+
+    @fileInput.onchange = @processFilesChange.bind @
     @enrichBtn.click => @enrichClicked()
     @originalImage.onload = => @resetContainerSize()
     @resetContainerSize()
@@ -36,7 +38,8 @@ class Page
     @imageContainer.style.width = @originalImage.width + 'px'
     @imageContainer.style.height = @originalImage.height + 'px'
 
-  processFilesChange: (files) ->
+  processFilesChange: ->
+    files = @fileInput.files
     return if files.length is 0
     file = files[0]
     return unless file.type.match 'image.*'
