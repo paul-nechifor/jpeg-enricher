@@ -13,8 +13,10 @@ class Page
     @repetitionsInput = document.getElementById 'repetitions'
     @shakinessInput = document.getElementById 'shakiness'
     @enrichBtn = $ '#enrich'
+    @imageContainer = $ '#original-image-container'
     @originalImage = document.getElementById 'original-image'
-    @imageContainer = document.getElementById 'original-image-container'
+    @orgWidth = @originalImage.width
+    @orgHeight = @originalImage.height
     @fileInput = document.getElementById 'file'
     @quality = 20
     @repetitions = 100
@@ -31,12 +33,10 @@ class Page
 
     @fileInput.onchange = @processFilesChange.bind @
     @enrichBtn.click => @enrichClicked()
-    @originalImage.onload = => @resetContainerSize()
     @resetContainerSize()
 
   resetContainerSize: ->
-    @imageContainer.style.width = @originalImage.width + 'px'
-    @imageContainer.style.height = @originalImage.height + 'px'
+    @imageContainer.css width: @orgWidth + 'px', height: @orgHeight + 'px'
 
   processFilesChange: ->
     files = @fileInput.files
@@ -47,6 +47,8 @@ class Page
     reader.onload = (e) =>
       @originalImageSrc = e.target.result
       @originalImage.src = @originalImageSrc
+      @orgWidth = @originalImage.width
+      @orgHeight = @originalImage.height
       @resetContainerSize()
     reader.readAsDataURL file
 
