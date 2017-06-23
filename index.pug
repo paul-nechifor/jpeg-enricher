@@ -1,0 +1,137 @@
+mixin f(id, type, text, desc)
+  .form-group
+    label.control-label.col-sm-4(for=id)= text
+    .controls.col-sm-8
+      input.form-control(id=id, type=type, data-content=desc)
+
+doctype html
+html(lang='ro')
+  head
+    meta(charset='utf-8')
+    title JPEG Enricher
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700|Open+Sans+Condensed:300,300italic,700&subset=latin,latin-ext')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
+    style: :stylus(compress=true)
+      body
+        font-family 'Open Sans', "Helvetica Neue", Helvetica, Arial, sans-serif
+        padding 0
+
+      body, label
+        font-size 16px
+
+      body, li, h1, h2, h3
+        line-height 1.4
+
+      p, li, ul, ol
+        margin-bottom 1em
+
+      a
+        &:hover
+          text-decoration none
+          border-bottom 1px solid #A4C1D3
+          &.hide-link
+            color #08c
+        &.hide-link
+          color #333
+
+      h1, h2, h3, h4, h5, h6
+        font-family 'Open Sans Condensed', "Helvetica Neue", Helvetica, Arial, sans-serif
+        font-weight 300
+        margin 0
+
+      h1
+        text-align center
+        font-size 56px
+        a
+          color #333
+          &:hover
+            text-decoration none
+            border 0
+            color #08c
+
+      header
+        margin 0 0 25px 0
+
+      footer
+        margin-top 45px
+        padding-bottom 10px
+        text-align center
+        font-size 16px
+        padding-top 10px
+
+      /* Devices with big screens. */
+      @media only screen and (min-width: 768px)
+        header, .readable, footer
+          width 600px
+          margin-left auto
+          margin-right auto
+
+      /* Devices with medium screens */
+      @media only screen and (min-width: 480px) and (max-width: 767px)
+        header, .readable, footer
+          max-width 600px
+          padding 0 10px
+          margin-left auto
+          margin-right auto
+
+      /* Devices with small screens */
+      @media only screen and (max-width: 479px)
+        header, .readable, footer
+          padding 0 8px
+
+        body, label
+          font-size 14px
+        h1
+          font-size 36px
+        h2
+          font-size 29px
+        h3
+          font-size 22px
+
+        header
+          margin 0 0 5px 0
+        footer
+          font-size 14px
+
+      #original-image-container
+        display block
+        margin 0 auto
+        max-width none
+        overflow hidden
+
+      #original-image
+        display block
+        max-width none
+        margin 0 auto // This is temporary.
+
+  body
+    header
+      h1
+        a(href='.') JPEG Enricher
+
+    .readable
+      p.
+        Are you sick of people who save screenshots as PNG images thereby making
+        text too easy to read? This tool solves that problem by allowing you to
+        enrich images with as many JPEG artefacts as you like.
+
+      form.form-horizontal
+        +f('file', 'file', 'Select image', 'Select image')
+        +f('quality', 'text', 'Quality', 'JPEG image quality (lower is better).')
+        +f('repetitions', 'text', 'Repetitions', 'Number of times to repeat the saving process.')
+        +f('shakiness', 'text', 'Shakiness', 'By how many pixels to shake the image. This is necessary to bring out the artefacts.')
+        .form-group
+          .col-sm-8.col-sm-offset-4
+            button.btn.btn-info#enrich(type='button')
+              span.glyphicon.glyphicon-ok
+              span.text  Enrich
+
+    #original-image-container
+      img#original-image(src='image.png', alt='')
+
+    footer
+      p.text-center Created by <a href='/'>Paul Nechifor</a>.
+
+    script(src='//code.jquery.com/jquery-1.10.2.min.js')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js')
+    script !{js}
