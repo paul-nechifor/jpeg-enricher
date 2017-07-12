@@ -36,11 +36,11 @@ class Page {
 
     this.fileInput.onchange = this.processFilesChange.bind(this);
     this.enrichBtn.click(() => this.enrichClicked());
-    return this.resetContainerSize();
+    this.resetContainerSize();
   }
 
   resetContainerSize() {
-    return this.imageContainer.css({width: this.orgWidth + 'px', height: this.orgHeight + 'px'});
+    this.imageContainer.css({width: this.orgWidth + 'px', height: this.orgHeight + 'px'});
   }
 
   processFilesChange() {
@@ -56,7 +56,7 @@ class Page {
       this.orgHeight = this.originalImage.height;
       return this.resetContainerSize();
     };
-    return reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
   }
 
   setButtonType(buttonIsEnrich) {
@@ -103,7 +103,7 @@ class Page {
     if (shakiness >= 0) { this.shakiness = shakiness; }
     this.qualityInput.value = this.quality;
     this.repetitionsInput.value = this.repetitions;
-    return this.shakinessInput.value = this.shakiness;
+    this.shakinessInput.value = this.shakiness;
   }
 
   enrichImage(continueCallback, onFinish) {
@@ -144,7 +144,7 @@ class Page {
         onFinish(lastX, lastY);
       }
     };
-    return nextStep();
+    nextStep();
   }
 }
 
@@ -165,7 +165,7 @@ function uint6ToB64(nUint6) {
   }
 }
 
-var base64EncArr = function(aBytes) {
+function base64EncArr(aBytes) {
   let nMod3 = 2;
   let sB64Enc = "";
   let nLen = aBytes.length;
@@ -183,4 +183,4 @@ var base64EncArr = function(aBytes) {
     nIdx++;
   }
   return sB64Enc.substr(0, (sB64Enc.length - 2) + nMod3) + ((nMod3 === 2 ? "" : (nMod3 === 1 ? "=" : "==")));
-};
+}
